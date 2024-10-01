@@ -75,6 +75,12 @@ app.use((req,res,next) => {
     next();
 });
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+    res.status(200).json({ message: 'Server is healthy!' });
+});
+
+
 //inse pehle krn h 
  
 app.use("/listings",listingRouter);
