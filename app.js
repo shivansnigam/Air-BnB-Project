@@ -19,6 +19,7 @@ const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js")
 // const review = require("./models/review.js");
+const Listing = require("./models/listing"); // Listing model ko import karein
 
 
  
@@ -82,7 +83,10 @@ app.get('/health', (req, res) => {
 
 
 //inse pehle krn h 
- 
+app.get("/", async (req, res) => {
+    const allListings = await Listing.find({}); // Sabhi listings ko fetch karein
+    res.render("listings/index", { allListings });
+});
 app.use("/listings",listingRouter);
 app.use("/listings/:id/reviews",reviewRouter);
 app.use("/",userRouter)
