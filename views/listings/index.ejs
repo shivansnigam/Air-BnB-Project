@@ -8,6 +8,8 @@
         align-items: center;
         justify-content: center; /* Center the filters */
         margin-bottom: 2rem; /* Space below the filters */
+        overflow-x: auto; /* Allow horizontal scrolling */
+        padding: 10px 0; /* Add padding for the slider */
     }
 
     .filter {
@@ -15,7 +17,7 @@
         margin: 1rem; /* Add uniform margin */
         opacity: 0.7;
         transition: opacity 0.3s; /* Smooth opacity transition */
-        padding: 1rem; /* Add padding for better touch targets */
+        padding: 0.5rem; /* Add padding for better touch targets */
         border: 1px solid transparent; /* Default border for modern look */
         border-radius: 1rem; /* Rounded corners */
         background-color: #f8f9fa; /* Light background for visibility */
@@ -49,22 +51,19 @@
     }
 
     .tax-switch {
-        border: 1px solid black;
-        border-radius: 1rem;
+         
+         
         height: 3.25rem;
         padding: 1rem;
         margin-left: 1rem; /* Adjust margin for better spacing */
         display: flex;
         align-items: center;
-        background-color: #f8f9fa; /* Match switch background */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        
     }
 
     /* Card Layout */
     .listing-card {
-         /* Smooth transition for card hover effect */
         margin: 0 5px;
-        
     }
 
     .listing-card:hover {
@@ -78,9 +77,36 @@
 
     /* Adjust card size for different screen sizes */
     @media (max-width: 576px) {
+    .filter div {
+        font-size: 1.5rem; /* Mobile screens ke liye icon size ko chhota kar do */
+    }
+
+    .filter p {
+        font-size: 0.7rem; /* Mobile screens ke liye text size bhi thoda chhota kar do */
+    }
+}
+
+    @media (max-width: 576px) {
+        .tax-switch {
+            margin-top: 70px;
+         margin-left: -1rem; /* Adjust margin for better spacing */
+         
+     }
         .listing-card {
             width: 90%; /* Full width on extra small screens */
             margin: 0 auto; /* Center the card */
+        }
+
+        /* Filters display horizontally on mobile */
+        #filters {
+            flex-direction: row; /* Change to row for mobile */
+            justify-content: flex-start; /* Align items to the start */
+            flex-wrap: nowrap;
+            
+        }
+
+        .filter {
+            flex: 0 0 auto; /* Prevent filters from stretching */
         }
     }
 
@@ -114,10 +140,73 @@
             width: 100%; /* Five columns on extra extra large screens */
         }
     }
-    
+    .scroll-button {
+    background-color: #007bff; /* Button background color */
+    color: white; /* Button text color */
+    border: none; /* No border */
+    border-radius: 50%; /* Circular buttons */
+    width: 30px; /* Width of buttons */
+    height: 30px; /* Height of buttons */
+    cursor: pointer; /* Pointer cursor on hover */
+    position: absolute; /* Position absolute to place it correctly */
+    z-index: 1; /* Ensure buttons are above other elements */
+}
+
+.scroll-button.left {
+    left: 10px; /* Position left button */
+    top: 40%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust position */
+}
+
+.scroll-button.right {
+    right: 10px; /* Position right button */
+    top: 40%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust position */
+}
+
+/* Hide scroll buttons on larger screens */
+@media (min-width: 768px) { /* Adjust this value based on your needs */
+    .scroll-button {
+        display: none; /* Hide scroll buttons */
+    }
+}
+
+    /* Add a glowing animation effect to the toggle button */
+@keyframes glowing {
+    0% {
+        background-color: #007bff;
+        box-shadow: 0 0 5px #007bff;
+    }
+    50% {
+        background-color: #00dbde;
+        box-shadow: 0 0 20px #00dbde;
+    }
+    100% {
+        background-color: #007bff;
+        box-shadow: 0 0 5px #007bff;
+    }
+}
+
+/* Apply the animation to the toggle switch */
+.tax-switch .form-check-input {
+    animation: glowing 2s infinite; /* Runs the animation continuously */
+    border-color: #007bff;
+    box-shadow: 0 0 10px #007bff;
+    transition: background-color 0.3s ease;
+}
+
+/* Optional: Add hover effect to intensify the glow when hovered */
+.tax-switch .form-check-input:hover {
+    background-color: #00dbde; /* Changes the background color on hover */
+    box-shadow: 0 0 30px #00dbde;
+}
+
 </style>
 
+
 <div id="filters">
+    <button class="scroll-button left" onclick="scrollFiltersLeft()">&#10094;</button> <!-- Left Scroll Button -->
+    
     <div class="filter">
         <div><i class="fa-solid fa-fire"></i></div>
         <p>Trending</p>
@@ -158,29 +247,64 @@
         <div><i class="fa-solid fa-igloo"></i></div>
         <p>Domes</p>
     </div>
+    
     <div class="filter">
-        <div><i class="fa-solid fa-sailboat"></i></div>
-        <p>Boat</p>
+        <div><i class="fa-solid fa-plane"></i></div>
+        <p>Airports</p>
     </div>
+    <div class="filter">
+        <div><i class="fa-solid fa-tree"></i></div>
+        <p>Forests</p>
+    </div>
+    <div class="filter">
+        <div><i class="fa-solid fa-mountain-sun"></i></div>
+        <p>Sunset Views</p>
+    </div>
+    <div class="filter">
+        <div><i class="fa-solid fa-fish"></i></div>
+        <p>Fishing Spots</p>
+    </div>
+    <div class="filter">
+        <div><i class="fa-solid fa-bicycle"></i></div>
+        <p>Cycling Trails</p>
+    </div>
+    <div class="filter">
+        <div><i class="fa-solid fa-hiking"></i></div>
+        <p>Hiking</p>
+    </div>
+    <div class="filter">
+        <div><i class="fa-solid fa-water"></i></div>
+        <p>Lakes</p>
+    </div>
+    <div class="filter">
+        <div><i class="fa-solid fa-paintbrush"></i></div>
+        <p>Art Galleries</p>
+    </div>
+    <div class="filter">
+        <div><i class="fa-solid fa-music"></i></div>
+        <p>Live Music</p>
+    </div>
+    
+    <button class="scroll-button right" onclick="scrollFiltersRight()">&#10095;</button> <!-- Right Scroll Button -->
+</div>
 
-    <div class="tax-switch">
-        <div class="form-check form-check-reverse form-switch">
-            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-            <label class="form-check-label" for="flexSwitchCheckDefault">Display Taxes </label>
-        </div>
+<div class="tax-switch">
+    <div class="form-check form-check-reverse form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+        <label class="form-check-label" for="flexSwitchCheckDefault">Display Taxes </label>
     </div>
 </div>
 
-<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+<div class="row row-cols-lg-4 row-cols-md-2 row-cols-sm-1 mt-3">
     <% for(let listing of allListings) { %>
         <a href="/listings/<%= listing._id %>" class="listing-link">
-            <div class="card col listing-card" style="position: relative; width: 300px; height: 400px; background-color: #000; display: flex; flex-direction: column; justify-content: end; padding: 12px; gap: 12px; border-radius: 8px; cursor: pointer; color: white;">
+            <div class="card col listing-card mt-3" style="position: relative; width: 300px; height: 400px; background-color: #000; display: flex; flex-direction: column; justify-content: end; padding: 12px; gap: 12px; border-radius: 8px; cursor: pointer; color: white;">
                 <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" style="height: 250px; border-radius: 8px;">
                 <div class="card-img-overlay"></div>
                 <div class="card-body">
                     <p class="heading"><b><%= listing.title %></b></p>
-                    <p> &#8377; <%= listing.price.toLocaleString("en-IN") %> /Night</p>
-                    <i class="tax-info" style="display: none;"> &nbsp; &nbsp; +18% GST</i>
+                    <p>&#8377; <%= listing.price.toLocaleString("en-IN") %> /Night</p>
+                    <i class="tax-info" style="display: none;">&nbsp; &nbsp; +18% GST</i>
                 </div>
 
                 <style>
@@ -221,14 +345,30 @@
         </a>
     <% } %>
 </div>
-
-
 <script>
+   function scrollFiltersLeft() {
+        console.log("Scrolling left");
+        document.getElementById("filters").scrollBy({ 
+            top: 0, 
+            left: -200, // Scroll left by 200px
+            behavior: 'smooth' // Smooth scrolling
+        });
+    }
+
+    function scrollFiltersRight() {
+        console.log("Scrolling right");
+        document.getElementById("filters").scrollBy({ 
+            top: 0, 
+            left: 200, // Scroll right by 200px
+            behavior: 'smooth' // Smooth scrolling
+        });
+    }
+
     let taxswitch = document.getElementById("flexSwitchCheckDefault");
     taxswitch.addEventListener("click", () => {
         let taxInfo = document.getElementsByClassName("tax-info");
-        for (info of taxInfo) {
-            info.style.display = info.style.display !== "inline" ? "inline" : "none";
+        for (let i = 0; i < taxInfo.length; i++) {
+            taxInfo[i].style.display = taxInfo[i].style.display === "none" ? "block" : "none";
         }
     });
 </script>
